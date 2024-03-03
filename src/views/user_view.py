@@ -82,8 +82,8 @@ def lambda_handler_view(event, context):
     if http_method == 'POST':
         if path == '/getUser':
             user_data = json.loads(event['body'])
-            user_id=user_data.get('user_id')
-            response = user_service.get_user(user_id)
+            email=user_data.get('email')
+            response = user_service.get_user(email)
             return {
                 'statusCode': 200,
                 'body': json.dumps(response)
@@ -100,17 +100,17 @@ def lambda_handler_view(event, context):
         
         if path == '/updateUser':
             user_data = json.loads(event['body'])
-            user_id=user_data.get('user_id')
-            response = user_service.update_user(user_id,user_data)
+            email=user_data.get('email')
+            response = user_service.update_user(email,user_data)
             return {
                 'statusCode': 200,
-                'body': json.dumps(response)
+                'body': response #json.dumps(response)
             }
         
         if path == '/deleteUser':
             user_data = json.loads(event['body'])
-            user_id=user_data.get('user_id')
-            response = user_service.delete_user(user_id)
+            email=user_data.get('email')
+            response = user_service.delete_user(email)
             return {
                 'statusCode': 200,
                 'body': json.dumps(response)

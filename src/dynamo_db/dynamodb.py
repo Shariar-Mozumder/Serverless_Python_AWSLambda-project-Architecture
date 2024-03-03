@@ -1,7 +1,7 @@
 import boto3
 
 class DynamoDB:
-    def __init__(self, table_name='Usertable'):
+    def __init__(self, table_name='UserTable'):
         self.table_name = table_name
         self.dynamodb = boto3.resource('dynamodb')
         self.table = self.dynamodb.Table(table_name)
@@ -15,12 +15,13 @@ class DynamoDB:
         item = response.get('Item')
         return item
 
-    def update_item(self, key, update_expression, expression_attribute_values):
+    def update_item(self, key, update_expression,expressionAttributeNames, expression_attribute_values):
         response = self.table.update_item(
             Key=key,
             UpdateExpression=update_expression,
+            ExpressionAttributeNames=expressionAttributeNames,
             ExpressionAttributeValues=expression_attribute_values,
-            ReturnValues='UPDATED_NEW'
+            # ReturnValues='UPDATED_NEW'
         )
         updated_item = response.get('Attributes')
         return updated_item

@@ -1,0 +1,1 @@
+# Serverless_Python_AWSLambda-project-Architecture

@@ -15,13 +15,25 @@ class DynamoDB:
         item = response.get('Item')
         return item
 
-    def update_item(self, key, update_expression,expressionAttributeNames, expression_attribute_values):
+    def update_item(self, key, update_fields):
+        update_expression_parts = []
+        expression_attribute_values = {}
+        
+         # Construct the UpdateExpression and ExpressionAttributeValues dynamically
+        for i, (field_name, field_value) in enumerate(update_fields.items()):
+            update_expression_parts.append(f"#{field_name} = :value{i}")
+            expression_attribute_values[f":value{i}"] = field_value
+        
+        # Join the UpdateExpression parts into a single string
+        update_expression = "SET " + ", ".join(update_expression_parts)
+
+        # Execute the update_item operation with the constructed expression and values
         response = self.table.update_item(
             Key=key,
             UpdateExpression=update_expression,
-            ExpressionAttributeNames=expressionAttributeNames,
+            ExpressionAttributeNames={f"#{field_name}": field_name for field_name in update_fields.keys()},
             ExpressionAttributeValues=expression_attribute_values,
-            # ReturnValues='UPDATED_NEW'
+            ReturnValues='UPDATED_NEW'
         )
         updated_item = response.get('Attributes')
         return updated_item

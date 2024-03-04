@@ -40,13 +40,15 @@ class UserService:
     def update_user(self,email, user_data):
         # Implement logic to update a user in the database
         try:
-            key={'id': email},
-            updateExpression="set #name = :n",
-            expressionAttributeNames={"#name": "name",},
-            expressionAttributeValues={
-                ":n": "John Doe",
-            },
-            response=self.db.update_item(key,updateExpression,expressionAttributeNames,expressionAttributeValues)
+            key={'id': email}
+            # updateExpression="set #name = :n, #text = :t, #company=:c"
+            # expressionAttributeNames={"#name": "name", "#text":"text","#company":"company"}
+            # expressionAttributeValues={
+            #     ":n": user_data.get("name"),
+            #     ":t": user_data.get("text"),
+            #     ":c": user_data.get("company")
+            # }
+            response=self.db.update_item(key,user_data)
             return str(response)
         except Exception as e:
             return str(e)

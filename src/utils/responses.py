@@ -12,11 +12,8 @@ def success_response(status_code, data):
         dict: The success response.
     """
     return {
-        'statusCode': status_code,
-        'body': json.dumps(data),
-        'headers': {
-            'Content-Type': 'application/json'
-        }
+        "statusCode": status_code,
+        "body": json.dumps(data)
     }
 
 def error_response(status_code, error_message):
@@ -31,9 +28,6 @@ def error_response(status_code, error_message):
         dict: The error response.
     """
     return {
-        'statusCode': status_code,
-        'body': json.dumps({'error': error_message}),
-        'headers': {
-            'Content-Type': 'application/json'
-        }
+        "statusCode": status_code,
+        "body": json.dumps({'error': error_message})
     }
